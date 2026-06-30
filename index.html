@@ -9,36 +9,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
   :root{
-    --lagoon:#15332D;
-    --lagoon-light:#1F4A41;
-    --rust:#C8602F;
-    --rust-light:#E07A45;
-    --sand:#F3ECDC;
-    --sand-deep:#E7DCC2;
-    --grey:#454A48;
-    --foam:#FFFFFF;
-    --gold:#C9A96E;
-    --ok:#3F7A5C;
-    --radius:14px;
+    --lagoon:#15332D; --lagoon-light:#1F4A41; --rust:#C8602F; --rust-light:#E07A45;
+    --sand:#F3ECDC; --sand-deep:#E7DCC2; --grey:#454A48; --foam:#FFFFFF; --gold:#C9A96E;
+    --ok:#3F7A5C; --warn:#B0432F; --radius:14px;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
-  body{
-    background:var(--sand);
-    color:var(--grey);
-    font-family:'Fraunces',serif;
-    font-optical-sizing:auto;
-    -webkit-font-smoothing:antialiased;
-    min-height:100vh;
-    padding-bottom:84px;
-  }
+  body{background:var(--sand);color:var(--grey);font-family:'Fraunces',serif;font-optical-sizing:auto;-webkit-font-smoothing:antialiased;min-height:100vh;padding-bottom:84px;}
   .stencil{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:0.02em;}
   .utility{font-family:'Inter',sans-serif;}
   button{font-family:'Inter',sans-serif;cursor:pointer;border:none;background:none;color:inherit;}
   a{color:inherit;}
   button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--rust-light);outline-offset:2px;}
 
-  /* HEADER */
   .topbar{background:var(--lagoon);color:var(--sand);padding:18px 18px 22px;position:relative;overflow:hidden;}
   .topbar::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(180deg,rgba(255,255,255,0.025) 0px,rgba(255,255,255,0.025) 2px,transparent 2px,transparent 10px);pointer-events:none;}
   .topbar-row{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:1;}
@@ -53,13 +36,17 @@
   .bungalow-select button:last-child{border-right:none;}
   .bungalow-select button.active{color:var(--sand);background:rgba(200,96,47,0.18);box-shadow:inset 0 -3px 0 var(--rust);}
 
-  /* MAIN */
-  main{padding:18px;max-width:560px;margin:0 auto;}
+  .subtabs{display:flex;gap:8px;overflow-x:auto;padding:14px 18px 4px;max-width:560px;margin:0 auto;scrollbar-width:none;}
+  .subtabs::-webkit-scrollbar{display:none;}
+  .subtab-chip{flex-shrink:0;background:var(--foam);border:1.5px solid var(--sand-deep);border-radius:20px;padding:7px 14px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:700;color:var(--grey);white-space:nowrap;}
+  .subtab-chip.active{background:var(--lagoon);color:var(--sand);border-color:var(--lagoon);}
+
+  main{padding:6px 18px 18px;max-width:560px;margin:0 auto;}
   .section-title{font-size:22px;margin:0 0 14px;color:var(--lagoon);}
   .card{background:var(--foam);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:0 1px 3px rgba(21,51,45,0.08);}
   .muted{color:#8b8378;font-size:13px;font-family:'Inter',sans-serif;}
+  .empty-card{border:1.5px dashed var(--sand-deep);background:transparent;box-shadow:none;color:#a39c8e;font-family:'Inter',sans-serif;font-size:13px;text-align:center;padding:18px;}
 
-  /* WIFI */
   .wifi-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--sand-deep);}
   .wifi-row:last-child{border-bottom:none;}
   .wifi-label{font-family:'Inter',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:0.06em;color:#8b8378;}
@@ -68,7 +55,6 @@
   .icon-btn:hover{background:var(--sand-deep);}
   .help-line{display:flex;gap:8px;align-items:center;font-family:'Inter',sans-serif;font-size:13px;margin-top:4px;color:var(--grey);}
 
-  /* LOGEMENT */
   .info-grid{display:flex;gap:10px;margin-bottom:14px;}
   .info-tile{flex:1;background:var(--lagoon);color:var(--sand);border-radius:var(--radius);padding:14px;text-align:center;}
   .info-tile .stencil{font-size:20px;}
@@ -80,22 +66,11 @@
   .contact-card{background:var(--lagoon);color:var(--sand);}
   .contact-card a{font-family:'Inter',sans-serif;font-weight:700;font-size:19px;color:var(--gold);text-decoration:none;}
 
-  /* ALENTOURS */
-  /* Filter chips */
+  .freeform-text{font-size:15px;line-height:1.55;white-space:pre-line;}
+
   .filters{display:flex;gap:8px;overflow-x:auto;padding:0 0 4px;margin-bottom:4px;scrollbar-width:none;}
   .filters::-webkit-scrollbar{display:none;}
-  .filter-chip{
-    flex-shrink:0;
-    background:var(--foam);
-    border:1.5px solid var(--sand-deep);
-    border-radius:20px;
-    padding:7px 13px;
-    font-family:'Inter',sans-serif;
-    font-size:12px;
-    font-weight:600;
-    color:var(--grey);
-    white-space:nowrap;
-  }
+  .filter-chip{flex-shrink:0;background:var(--foam);border:1.5px solid var(--sand-deep);border-radius:20px;padding:7px 13px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--grey);white-space:nowrap;}
   .filter-chip.active{background:var(--lagoon);color:var(--sand);border-color:var(--lagoon);}
   .filter-chip:hover:not(.active){background:var(--sand-deep);}
 
@@ -103,14 +78,14 @@
   .cat-title:first-of-type{margin-top:0;}
   .place-card{display:flex;justify-content:space-between;align-items:center;gap:10px;}
   .place-name{font-family:'Inter',sans-serif;font-weight:700;font-size:15px;color:var(--lagoon);}
-  .place-meta{display:flex;gap:8px;align-items:center;margin-top:2px;}
+  .place-meta{display:flex;gap:6px;align-items:center;margin-top:2px;flex-wrap:wrap;}
   .place-rating{font-size:12px;color:var(--gold);font-family:'Inter',sans-serif;}
   .place-badge{font-size:10px;font-family:'Inter',sans-serif;font-weight:700;background:var(--sand);color:var(--grey);border-radius:4px;padding:2px 6px;text-transform:uppercase;letter-spacing:0.05em;}
   .place-note{font-size:14px;margin:5px 0 0;}
   .place-link{flex-shrink:0;background:var(--rust);color:#fff;border-radius:8px;padding:9px 12px;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;}
   .place-link:hover{background:var(--rust-light);}
+  .new-badge{background:var(--rust);color:#fff;font-size:9px;font-weight:800;border-radius:4px;padding:2px 6px;letter-spacing:0.05em;}
 
-  /* AVIS */
   .stars{display:flex;gap:6px;margin:10px 0 16px;}
   .star{font-size:30px;color:var(--sand-deep);line-height:1;}
   .star.filled{color:var(--gold);}
@@ -129,15 +104,31 @@
   .review-text{font-size:14px;margin:5px 0 0;}
   .review-date{font-family:'Inter',sans-serif;font-size:11px;color:#a39c8e;}
 
-  /* TABBAR */
-  .tabbar{position:fixed;bottom:0;left:0;right:0;background:var(--lagoon);display:flex;z-index:10;padding-bottom:env(safe-area-inset-bottom);}
-  .tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:11px 2px 9px;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;color:rgba(243,236,220,0.5);position:relative;border-right:1px solid rgba(0,0,0,0.2);}
+  .allergy-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--sand-deep);cursor:pointer;}
+  .allergy-row:last-of-type{border-bottom:none;}
+  .allergy-info{display:flex;flex-direction:column;gap:2px;}
+  .allergy-name{font-family:'Inter',sans-serif;font-weight:600;font-size:15px;color:var(--lagoon);}
+  .allergy-note{font-size:12px;}
+  .allergy-cb{width:22px;height:22px;accent-color:var(--rust);flex-shrink:0;}
+  .allergy-checked{background:#FBF3EA;margin:0 -16px;padding:11px 16px;}
+  .allergy-custom-row{padding-top:14px;margin-top:6px;border-top:1px dashed var(--sand-deep);display:flex;flex-direction:column;gap:8px;}
+  .allergy-custom-input{margin-bottom:0;}
+
+  .rule-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--sand-deep);}
+  .rule-row:last-child{border-bottom:none;}
+  .rule-label{font-family:'Inter',sans-serif;font-weight:600;font-size:15px;color:var(--lagoon);}
+  .rule-status{font-family:'Inter',sans-serif;font-weight:700;font-size:12px;border-radius:14px;padding:5px 12px;white-space:nowrap;}
+  .rule-yes{background:#EAF3ED;color:var(--ok);}
+  .rule-no{background:#FBEAE6;color:var(--warn);}
+  .rule-num{background:var(--sand);color:var(--lagoon);}
+
+  .tabbar{position:fixed;bottom:0;left:0;right:0;background:var(--lagoon);display:flex;z-index:10;padding-bottom:env(safe-area-inset-bottom);overflow-x:auto;}
+  .tabbar button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:11px 2px 9px;font-family:'Inter',sans-serif;font-size:10.5px;font-weight:600;color:rgba(243,236,220,0.5);position:relative;border-right:1px solid rgba(0,0,0,0.2);min-width:58px;}
   .tabbar button:last-child{border-right:none;}
-  .tabbar button .ic{font-size:19px;}
+  .tabbar button .ic{font-size:18px;}
   .tabbar button.active{color:var(--sand);}
   .tabbar button.active::after{content:"";position:absolute;top:0;left:18%;right:18%;height:3px;background:var(--rust);border-radius:0 0 3px 3px;}
 
-  /* MODAL */
   .modal{position:fixed;inset:0;background:rgba(21,51,45,0.78);display:flex;align-items:center;justify-content:center;z-index:50;padding:20px;}
   .modal.hidden{display:none;}
   .modal-card{background:#fff;border-radius:16px;padding:26px 22px;text-align:center;max-width:320px;}
@@ -163,12 +154,14 @@
   </div>
 </header>
 <nav class="bungalow-select" id="bungalowSelect"></nav>
+<nav class="subtabs" id="subtabs"></nav>
 
 <main id="tabContent"></main>
 
 <nav class="tabbar" id="tabbar">
   <button data-tab="wifi" class="active"><span class="ic">📶</span><span id="lbl-wifi">Wi-Fi</span></button>
   <button data-tab="logement"><span class="ic">🏠</span><span id="lbl-logement">Logement</span></button>
+  <button data-tab="reglement"><span class="ic">📋</span><span id="lbl-reglement">Règlement</span></button>
   <button data-tab="alentours"><span class="ic">📍</span><span id="lbl-alentours">Alentours</span></button>
   <button data-tab="allergenes"><span class="ic">🥗</span><span id="lbl-allergenes">Allergènes</span></button>
   <button data-tab="chambre"><span class="ic">♿</span><span id="lbl-chambre">Chambre</span></button>
@@ -184,22 +177,42 @@
 </div>
 
 <script>
-/* ============================================================
-   BUNGALOWS CONFIG — éditez ici
-   ============================================================ */
 const BUNGALOWS = [
-  {id:1,ssid:"SteLuce-Bungalow-01",pass:"AmbreLagon26!",checkin:"15:00",checkout:"11:00"},
-  {id:2,ssid:"SteLuce-Bungalow-02",pass:"CorailVague26!",checkin:"15:00",checkout:"11:00"},
-  {id:3,ssid:"SteLuce-Bungalow-03",pass:"SableDoux26!",checkin:"15:00",checkout:"11:00"},
-  {id:4,ssid:"SteLuce-Bungalow-04",pass:"GoldenBay26!",checkin:"15:00",checkout:"11:00"},
-  {id:5,ssid:"SteLuce-Bungalow-05",pass:"LagonBleu26!",checkin:"15:00",checkout:"11:00"},
+  {
+    id:1, ssid:"SteLuce-Bungalow-01", pass:"AmbreLagon26!", checkin:"15:00", checkout:"11:00",
+    infosProprietaire:{ fr:"", en:"" },
+    equipementsExtra:[],
+    reglement:{fetesAutorisees:null,visiteursMax:null,parking:"",reglesPerso:[]}
+  },
+  {
+    id:2, ssid:"SteLuce-Bungalow-02", pass:"CorailVague26!", checkin:"15:00", checkout:"11:00",
+    infosProprietaire:{fr:"",en:""},
+    equipementsExtra:[],
+    reglement:{fetesAutorisees:null,visiteursMax:null,parking:"",reglesPerso:[]}
+  },
+  {
+    id:3, ssid:"SteLuce-Bungalow-03", pass:"SableDoux26!", checkin:"15:00", checkout:"11:00",
+    infosProprietaire:{fr:"",en:""},
+    equipementsExtra:[],
+    reglement:{fetesAutorisees:null,visiteursMax:null,parking:"",reglesPerso:[]}
+  },
+  {
+    id:4, ssid:"SteLuce-Bungalow-04", pass:"GoldenBay26!", checkin:"15:00", checkout:"11:00",
+    infosProprietaire:{fr:"",en:""},
+    equipementsExtra:[],
+    reglement:{fetesAutorisees:null,visiteursMax:null,parking:"",reglesPerso:[]}
+  },
+  {
+    id:5, ssid:"SteLuce-Bungalow-05", pass:"LagonBleu26!", checkin:"15:00", checkout:"11:00",
+    infosProprietaire:{fr:"",en:""},
+    equipementsExtra:[],
+    reglement:{fetesAutorisees:null,visiteursMax:null,parking:"",reglesPerso:[]}
+  },
 ];
 const CONTACT_PHONE = "+596 696 00 00 00";
 
-/* ============================================================
-   PLACES — Toutes catégories
-   ============================================================ */
 const PLACES = {
+  bonsplans:[],
   plages:[
     {name:"Plage de Sainte-Luce",placeId:"ChIJuWy_1eAhQIwRYyNGBiETCOE",rating:4.6,
      note:{fr:"Grande plage de sable fin avec plusieurs criques ombragées, idéale en famille.",en:"Long sandy beach with shaded coves, perfect for families."}},
@@ -219,18 +232,30 @@ const PLACES = {
      note:{fr:"Club de plongée au cœur du village, baptêmes dès 8 ans, sites magnifiques au large.",en:"Dive club in the village center, discover dives from age 8, beautiful offshore sites."}}
   ],
   restaurants:[
-    {name:"Case Coco",placeId:"ChIJT3WHcowhQIwRd6THkR-OgKA",rating:4.5,
+    {name:"Case Coco",placeId:"ChIJT3WHcowhQIwRd6THkR-OgKA",rating:4.5,badge:{fr:"Fruits de mer",en:"Seafood"},
      note:{fr:"Cuisine française revisitée Antilles, réputée pour le homard — réservation indispensable.",en:"French cuisine with Antillean flair, famous for lobster — booking essential."}},
-    {name:"Le Manza",placeId:"ChIJy3lKuLUfQIwR4if4haEV3zA",rating:4.8,
-     note:{fr:"Italien pieds dans le sable, terrasse sous un amandier centenaire. Rhums Trois-Rivières à déguster sur place.",en:"Italian dining on the beach, terrace under an old almond tree. Trois-Rivières rums on site."}},
-    {name:"La Kabananou",placeId:"ChIJwcTa-_4hQIwRqr48MYXyB8g",rating:4.7,
+    {name:"La Kabananou",placeId:"ChIJwcTa-_4hQIwRqr48MYXyB8g",rating:4.7,badge:{fr:"Poisson · Fruits de mer",en:"Fish · Seafood"},
      note:{fr:"Ambiance très décontractée, plateaux de fruits de mer généreux, ceviche de thon.",en:"Super laid-back vibe, generous seafood platters, tuna ceviche."}},
-    {name:"Perle Bleue",placeId:"ChIJuc0jflEfQIwRe7Z5QxQ8Oh4",rating:4.2,
-     note:{fr:"Cuisine créole et française en bord de mer à Anse Mabouya.",en:"Creole and French cuisine by the sea at Anse Mabouya."}}
+    {name:"Perle Bleue",placeId:"ChIJuc0jflEfQIwRe7Z5QxQ8Oh4",rating:4.2,badge:{fr:"Créole · Poisson",en:"Creole · Fish"},
+     note:{fr:"Cuisine créole et française en bord de mer à Anse Mabouya.",en:"Creole and French cuisine by the sea at Anse Mabouya."}},
+    {name:"Le Manza",placeId:"ChIJy3lKuLUfQIwR4if4haEV3zA",rating:4.8,badge:{fr:"Viande · Italien",en:"Meat · Italian"},
+     note:{fr:"Italien pieds dans le sable, belles viandes grillées, terrasse sous un amandier centenaire.",en:"Italian dining on the beach, great grilled meats, terrace under an old almond tree."}},
+    {name:"Le Reflet des Iles",placeId:"ChIJOzg49NQhQIwR9msb6kzu8II",rating:4.3,badge:{fr:"Viande · Grillades",en:"Meat · Grill"},
+     note:{fr:"Grillades de viande au feu de bois, belle terrasse, cadre rustique chic.",en:"Wood-fired meat grills, lovely terrace, rustic-chic setting."}},
+    {name:"Le Petit Jardin",placeId:"ChIJzdRrSgWfaowRu5gC0Bo2Tio",rating:4.6,badge:{fr:"Végétarien",en:"Vegetarian"},
+     note:{fr:"Cuisine 100% végétarienne, jus frais, jardin tropical apaisant. À Fort-de-France.",en:"100% vegetarian cuisine, fresh juices, peaceful tropical garden. In Fort-de-France."}},
+    {name:"Bagdam Café",placeId:"ChIJrx1mAzGfaowR8eb0vVqTYjA",rating:4.4,badge:{fr:"Bar à salade · Léger",en:"Salad bar · Light"},
+     note:{fr:"Salades composées généreuses, formules légères et fraîches, cadre artistique. Fort-de-France.",en:"Generous composed salads, light and fresh formulas, artsy setting. Fort-de-France."}}
   ],
   pizzeria:[
     {name:"Le Zen Restaurant-Pizzéria",placeId:"ChIJf9tU9-AfQIwRJyj3Hk8WLyA",rating:4.4,
      note:{fr:"Pizzas et cuisine monde, à l'entrée de la plage de l'hôtel Karibéa. Terrasse couverte sympa.",en:"Pizzas and world cuisine at the Karibéa hotel beach entrance. Nice covered terrace."}}
+  ],
+  glaces:[
+    {name:"Boutik'Glaces",placeId:"ChIJD3CrnBugaowRzpHpNwSwJQg",rating:4.5,badge:{fr:"Glacier artisanal",en:"Artisan ice cream"},
+     note:{fr:"Glaces et sorbets artisanaux aux fruits tropicaux (corossol, fruit de la passion). Au Lamentin.",en:"Artisan ice cream and sorbets with tropical fruits (soursop, passion fruit). In Le Lamentin."}},
+    {name:"La Case à Glace",placeId:"ChIJrx1mAzGfaowR8eb0vVqTYjA",rating:4.3,badge:{fr:"Desserts · Glacier",en:"Desserts · Ice cream"},
+     note:{fr:"Desserts maison et glaces, idéal pause sucrée en fin de journée.",en:"Homemade desserts and ice cream, perfect sweet break at the end of the day."}}
   ],
   marche:[
     {name:"Marché couvert de Sainte-Luce",placeId:"ChIJLcnpGI8hQIwRHXqduMlaz0A",rating:4.0,
@@ -247,7 +272,7 @@ const PLACES = {
   shopping:[
     {name:"La Galleria",placeId:"ChIJV_ck_RShaowRKFKscmO5hh8",rating:4.1,badge:{fr:"Centre commercial",en:"Shopping mall"},
      note:{fr:"Le plus grand centre commercial de l'île au Lamentin : mode, beauté, restauration.",en:"Martinique's largest mall in Le Lamentin: fashion, beauty, food."}},
-    {name:"Marché de Saint-Pierre / Fort-de-France",placeId:"ChIJV_ck_RShaowRKFKscmO5hh8",rating:4.1,badge:{fr:"Artisanat · Souvenirs",en:"Crafts · Souvenirs"},
+    {name:"Marché de Fort-de-France",placeId:"ChIJV_ck_RShaowRKFKscmO5hh8",rating:4.1,badge:{fr:"Artisanat · Souvenirs",en:"Crafts · Souvenirs"},
      note:{fr:"Parfums, épices, bijoux créoles, madras — idéal pour vos cadeaux et souvenirs.",en:"Perfumes, spices, Creole jewelry, madras fabric — ideal for gifts and souvenirs."}}
   ],
   galeries:[
@@ -287,44 +312,60 @@ const PLACES = {
      note:{fr:"Panorama iconique sur le Rocher du Diamant depuis la côte. Spot photo incontournable.",en:"Iconic panoramic view of Diamond Rock from the coast. Ultimate photo spot."}},
     {name:"Distillerie Trois-Rivières",placeId:"ChIJy66CHVsfQIwRxf9-QKH0lMM",rating:4.5,badge:{fr:"Rhum · Visite",en:"Rum · Tour"},
      note:{fr:"Visite de distillerie avec dégustation — cadre magnifique, personnel passionné. 8€.",en:"Distillery visit and tasting — stunning grounds, passionate staff. €8."}}
-  ]
+  ],
+  nouveautes:[]
 };
 
-/* ============================================================
-   i18n
-   ============================================================ */
-const CAT_KEYS = ["plages","nautique","restaurants","pizzeria","marche","courses","shopping","galeries","enfants","soirees","histoire","spots"];
+const CAT_KEYS = ["plages","nautique","restaurants","pizzeria","glaces","marche","courses","shopping","galeries","enfants","soirees","histoire","spots","nouveautes"];
 
 const I18N = {
   fr:{
     eyebrow:"CONCIERGERIE · SAINTE-LUCE",bungalowWord:"BUNGALOW",qrLabel:"QR",
     qrInstructions:"Imprimez ce QR code et collez-le dans le bungalow : vos voyageurs n'auront qu'à le scanner pour ouvrir ce guide sur leur téléphone.",
     close:"Fermer",
-    tabs:{wifi:"Wi-Fi",logement:"Logement",alentours:"Alentours",allergenes:"Allergènes",chambre:"Chambre",avis:"Avis"},
+    tabs:{wifi:"Wi-Fi",logement:"Logement",reglement:"Règlement",alentours:"Alentours",allergenes:"Allergènes",chambre:"Chambre",avis:"Avis"},
     wifi:{title:"Connexion Wi-Fi",ssid:"Nom du réseau",pass:"Mot de passe",copy:"Copier",copied:"Copié !",show:"Afficher",hide:"Masquer",help:"Pas de signal ? Appelez-nous"},
     logement:{
       checkin:"Arrivée",checkout:"Départ",
       equipTitle:"Équipements",
       equip:["Climatisation","Eau chaude","Bouilloire","Linge de maison fourni","Cuisine équipée","Terrasse privée"],
+      equipExtraTitle:"Équipements spécifiques à ce logement",
       servicesTitle:"Services sur demande",
       services:["Cocktail de bienvenue","Formule champagne","Formule petit-déjeuner du jour en chambre","Massage bien-être","Ateliers & activités","Formule anniversaire","Formule lune de miel","Formule retraité","Décoration romantique"],
-      rulesTitle:"Règles de la maison",
-      rules:["Non-fumeur à l'intérieur","Calme après 22h","Animaux sur accord préalable uniquement"],
+      proprioTitle:"Informations du propriétaire",
+      proprioEmpty:"Aucune information particulière pour ce logement pour le moment.",
       contactTitle:"Contact conciergerie",
       onsite:"Présente sur place pendant les périodes de forte occupation."
     },
+    reglement:{
+      title:"Règlement intérieur",
+      subtitle:"Règles spécifiques à ce logement, transmises par le propriétaire.",
+      fetes:"Fêtes / réceptions autorisées",
+      yes:"Autorisées",no:"Non autorisées",unset:"Non précisé — nous consulter",
+      visiteurs:"Visiteurs supplémentaires autorisés",
+      visiteursUnit:"personne(s) max",
+      visiteursUnset:"Non précisé — nous consulter",
+      parking:"Stationnement",
+      parkingUnset:"Information à venir",
+      reglesTitle:"Règles spécifiques du propriétaire",
+      reglesEmpty:"Aucune règle particulière communiquée pour ce logement.",
+      generalTitle:"Règles générales (toutes locations)",
+      general:["Non-fumeur à l'intérieur","Calme après 22h, par respect du voisinage","Animaux uniquement sur accord préalable","Merci de respecter la capacité d'accueil indiquée"]
+    },
     catLabels:{
       plages:"🏖️ Plages",nautique:"🤿 Activités nautiques",restaurants:"🍽️ Restaurants",
-      pizzeria:"🍕 Pizzeria",marche:"🧺 Marché",courses:"🛒 Libre-service & courses",
+      pizzeria:"🍕 Pizzeria",glaces:"🍨 Glaces & desserts",marche:"🧺 Marché",courses:"🛒 Libre-service & courses",
       shopping:"🛍️ Shopping",galeries:"🎨 Galeries & artisanat",enfants:"👦 Pour les enfants",
       soirees:"🎉 Soirées & boîtes de nuit",histoire:"🏛️ Monuments historiques",
-      spots:"📸 Spots photo & plus belles vues"
+      spots:"📸 Spots photo & plus belles vues",nouveautes:"✨ Nouveautés"
     },
     filterAll:"Tout voir",
+    bonsplansTitle:"✨ Bons plans du moment",
+    bonsplansEmpty:"Aucun événement spécial pour le moment — revenez bientôt !",
     maps:"Itinéraire",
     allergenes:{
       title:"Allergènes — Petit-déjeuner du jour",
-      intro:"Notre formule petit-déjeuner en chambre peut contenir les allergènes suivants. Signalez-nous impérativement toute allergie avant la commande.",
+      intro:"Notre formule petit-déjeuner en chambre peut contenir les allergènes suivants. Cochez ce qui vous concerne, nous serons notifiés de vos besoins.",
       contact:"Signaler une allergie",
       list:[
         {icon:"🌾",name:"Gluten",note:"Pain, viennoiseries, céréales"},
@@ -340,6 +381,7 @@ const I18N = {
       ],
       customLabel:"Autre allergie",
       customPlaceholder:"Précisez ici si autre allergie…",
+      noteTitle:"Formules adaptées disponibles",
       notes:["Sans gluten — sur demande 24h à l'avance","Végétarien","Vegan — sur demande 24h à l'avance","Sans lactose"]
     },
     chambre:{
@@ -365,31 +407,49 @@ const I18N = {
     eyebrow:"CONCIERGE · SAINTE-LUCE",bungalowWord:"BUNGALOW",qrLabel:"QR",
     qrInstructions:"Print this QR code and stick it inside the bungalow: guests just scan it to open this guide on their phone.",
     close:"Close",
-    tabs:{wifi:"Wi-Fi",logement:"The place",alentours:"Nearby",allergenes:"Allergens",chambre:"Room",avis:"Reviews"},
+    tabs:{wifi:"Wi-Fi",logement:"The place",reglement:"House rules",alentours:"Nearby",allergenes:"Allergens",chambre:"Room",avis:"Reviews"},
     wifi:{title:"Wi-Fi connection",ssid:"Network name",pass:"Password",copy:"Copy",copied:"Copied!",show:"Show",hide:"Hide",help:"No signal? Call us"},
     logement:{
       checkin:"Check-in",checkout:"Check-out",
       equipTitle:"Amenities",
       equip:["Air conditioning","Hot water","Kettle","Linens provided","Equipped kitchen","Private terrace"],
+      equipExtraTitle:"Specific amenities for this property",
       servicesTitle:"Available on request",
       services:["Welcome cocktail","Champagne package","Breakfast of the day in room","Wellness massage","Workshops & activities","Birthday package","Honeymoon package","Retirement package","Romantic decoration"],
-      rulesTitle:"House rules",
-      rules:["No smoking indoors","Please keep quiet after 10pm","Pets only with prior agreement"],
+      proprioTitle:"Owner information",
+      proprioEmpty:"No specific information for this property at the moment.",
       contactTitle:"Concierge contact",
       onsite:"On site during peak occupancy periods."
     },
+    reglement:{
+      title:"House rules",
+      subtitle:"Specific rules for this property, provided by the owner.",
+      fetes:"Parties / receptions allowed",
+      yes:"Allowed",no:"Not allowed",unset:"Not specified — contact us",
+      visiteurs:"Additional visitors allowed",
+      visiteursUnit:"person(s) max",
+      visiteursUnset:"Not specified — contact us",
+      parking:"Parking",
+      parkingUnset:"Information coming soon",
+      reglesTitle:"Owner's specific rules",
+      reglesEmpty:"No specific rules communicated for this property.",
+      generalTitle:"General rules (all properties)",
+      general:["No smoking indoors","Quiet after 10pm, out of respect for neighbours","Pets only with prior agreement","Please respect the indicated guest capacity"]
+    },
     catLabels:{
       plages:"🏖️ Beaches",nautique:"🤿 Water activities",restaurants:"🍽️ Restaurants",
-      pizzeria:"🍕 Pizzeria",marche:"🧺 Market",courses:"🛒 Groceries",
+      pizzeria:"🍕 Pizzeria",glaces:"🍨 Ice cream & desserts",marche:"🧺 Market",courses:"🛒 Groceries",
       shopping:"🛍️ Shopping",galeries:"🎨 Galleries & crafts",enfants:"👦 For children",
       soirees:"🎉 Nights out & clubs",histoire:"🏛️ Historic landmarks",
-      spots:"📸 Photo spots & best views"
+      spots:"📸 Photo spots & best views",nouveautes:"✨ What's new"
     },
     filterAll:"See all",
+    bonsplansTitle:"✨ Happening right now",
+    bonsplansEmpty:"No special event at the moment — check back soon!",
     maps:"Directions",
     allergenes:{
       title:"Allergens — Breakfast of the day",
-      intro:"Our in-room breakfast may contain the following allergens. Please let us know about any allergies before ordering.",
+      intro:"Our in-room breakfast may contain the following allergens. Tick what concerns you, we'll be notified of your needs.",
       contact:"Report an allergy",
       list:[
         {icon:"🌾",name:"Gluten",note:"Bread, pastries, cereals"},
@@ -405,6 +465,7 @@ const I18N = {
       ],
       customLabel:"Other allergy",
       customPlaceholder:"Specify here if other allergy…",
+      noteTitle:"Adapted options available",
       notes:["Gluten-free — request 24h in advance","Vegetarian","Vegan — request 24h in advance","Lactose-free"]
     },
     chambre:{
@@ -428,16 +489,10 @@ const I18N = {
   }
 };
 
-/* ============================================================
-   STATE
-   ============================================================ */
 let state={lang:"fr",bungalow:1,tab:"wifi",passVisible:false,justSubmitted:false,activeFilter:"all"};
 function t(){return I18N[state.lang];}
 function currentBungalow(){return BUNGALOWS.find(b=>b.id===state.bungalow);}
 
-/* ============================================================
-   CHROME
-   ============================================================ */
 function renderChrome(){
   document.getElementById("eyebrowTxt").textContent=t().eyebrow;
   document.getElementById("bungalowWord").textContent=t().bungalowWord;
@@ -459,9 +514,6 @@ function renderChrome(){
   document.querySelectorAll(".tabbar button").forEach(btn=>btn.classList.toggle("active",btn.dataset.tab===state.tab));
 }
 
-/* ============================================================
-   WIFI
-   ============================================================ */
 function renderWifi(){
   const b=currentBungalow();const L=t().wifi;
   return`<div class="card">
@@ -488,19 +540,25 @@ function copyText(text,btn,label,copiedLabel){
   }).catch(()=>alert(text));
 }
 
-/* ============================================================
-   LOGEMENT
-   ============================================================ */
 function renderLogement(){
   const b=currentBungalow();const L=t().logement;
   const li=arr=>arr.map(x=>`<li><span class="dot">—</span>${x}</li>`).join("");
+  const extra=b.equipementsExtra||[];
+  const extraBlock = extra.length
+    ? `<div class="card"><p class="section-title" style="font-size:17px;margin-bottom:6px;">${L.equipExtraTitle}</p><ul class="clean">${li(extra.map(x=>x[state.lang]))}</ul></div>`
+    : `<div class="card empty-card">${L.equipExtraTitle} — ${state.lang==="fr"?"aucun élément renseigné pour le moment":"nothing added yet"}</div>`;
+  const proprioTxt = (b.infosProprietaire && b.infosProprietaire[state.lang]) ? b.infosProprietaire[state.lang] : "";
+  const proprioBlock = proprioTxt
+    ? `<div class="card"><p class="section-title" style="font-size:17px;margin-bottom:8px;">${L.proprioTitle}</p><p class="freeform-text">${proprioTxt}</p></div>`
+    : `<div class="card empty-card">${L.proprioTitle} — ${L.proprioEmpty}</div>`;
   return`<div class="info-grid">
     <div class="info-tile"><span class="utility">${L.checkin}</span><p class="stencil" style="margin:0;">${b.checkin}</p></div>
     <div class="info-tile"><span class="utility">${L.checkout}</span><p class="stencil" style="margin:0;">${b.checkout}</p></div>
   </div>
+  ${proprioBlock}
   <div class="card"><p class="section-title" style="font-size:17px;margin-bottom:6px;">${L.equipTitle}</p><ul class="clean">${li(L.equip)}</ul></div>
+  ${extraBlock}
   <div class="card"><p class="section-title" style="font-size:17px;margin-bottom:6px;">${L.servicesTitle}</p><ul class="clean">${li(L.services)}</ul></div>
-  <div class="card"><p class="section-title" style="font-size:17px;margin-bottom:6px;">${L.rulesTitle}</p><ul class="clean">${li(L.rules)}</ul></div>
   <div class="card contact-card">
     <p class="section-title" style="font-size:17px;color:var(--sand);margin-bottom:8px;">${L.contactTitle}</p>
     <a href="tel:${CONTACT_PHONE.replace(/\s/g,'')}">${CONTACT_PHONE}</a>
@@ -508,42 +566,132 @@ function renderLogement(){
   </div>`;
 }
 
-/* ============================================================
-   ALENTOURS
-   ============================================================ */
+function renderReglement(){
+  const b=currentBungalow();const L=t().reglement;
+  const r=b.reglement||{};
+  let fetesHtml;
+  if(r.fetesAutorisees===true) fetesHtml=`<span class="rule-status rule-yes">${L.yes}</span>`;
+  else if(r.fetesAutorisees===false) fetesHtml=`<span class="rule-status rule-no">${L.no}</span>`;
+  else fetesHtml=`<span class="rule-status rule-num">${L.unset}</span>`;
+  let visiteursHtml;
+  if(typeof r.visiteursMax==="number") visiteursHtml=`<span class="rule-status rule-num">${r.visiteursMax} ${L.visiteursUnit}</span>`;
+  else visiteursHtml=`<span class="rule-status rule-num">${L.visiteursUnset}</span>`;
+  const parkingTxt = r.parking ? r.parking : L.parkingUnset;
+  const reglesPerso = (r.reglesPerso && r.reglesPerso.length)
+    ? `<ul class="clean">${r.reglesPerso.map(x=>`<li><span class="dot">—</span>${x}</li>`).join("")}</ul>`
+    : `<p class="muted">${L.reglesEmpty}</p>`;
+  const general = L.general.map(x=>`<li><span class="dot">—</span>${x}</li>`).join("");
+  return`<p class="section-title">${L.title}</p>
+  <p class="muted" style="margin-top:-8px;margin-bottom:14px;">${L.subtitle}</p>
+  <div class="card">
+    <div class="rule-row"><span class="rule-label">${L.fetes}</span>${fetesHtml}</div>
+    <div class="rule-row"><span class="rule-label">${L.visiteurs}</span>${visiteursHtml}</div>
+    <div class="rule-row"><span class="rule-label">${L.parking}</span><span class="rule-status rule-num" style="text-align:right;max-width:55%;white-space:normal;">${parkingTxt}</span></div>
+  </div>
+  <div class="card">
+    <p class="section-title" style="font-size:17px;margin-bottom:8px;">${L.reglesTitle}</p>
+    ${reglesPerso}
+  </div>
+  <div class="card">
+    <p class="section-title" style="font-size:17px;margin-bottom:6px;">${L.generalTitle}</p>
+    <ul class="clean">${general}</ul>
+  </div>`;
+}
+
 function renderAlentours(){
   const L=t();
   const activeCats=state.activeFilter==="all" ? CAT_KEYS : [state.activeFilter];
-
   const chips=[
     `<button class="filter-chip ${state.activeFilter==="all"?"active":""}" onclick="setFilter('all')">${L.filterAll}</button>`,
     ...CAT_KEYS.map(k=>`<button class="filter-chip ${state.activeFilter===k?"active":""}" onclick="setFilter('${k}')">${L.catLabels[k]}</button>`)
   ].join("");
-
+  const bonsplansItems = PLACES.bonsplans.length
+    ? PLACES.bonsplans.map(p=>`
+      <div class="card place-card">
+        <div>
+          <p class="place-name">${p.name} <span class="new-badge">${state.lang==="fr"?"NOUVEAU":"NEW"}</span></p>
+          <div class="place-meta"><span class="place-badge">${p.date[state.lang]}</span></div>
+          <p class="place-note">${p.note[state.lang]}</p>
+        </div>
+      </div>`).join("")
+    : `<div class="card empty-card">${L.bonsplansEmpty}</div>`;
+  const bonsplansBlock = `<p class="cat-title" style="margin-top:0;">${L.bonsplansTitle}</p>${bonsplansItems}`;
   const cards=activeCats.map(cat=>{
-    const items=PLACES[cat].map(p=>{
+    const items=(PLACES[cat]||[]).length ? PLACES[cat].map(p=>{
       const badge=p.badge?`<span class="place-badge">${p.badge[state.lang]}</span>`:"";
+      const ratingTxt = p.rating ? `<span class="place-rating">★ ${p.rating}</span>` : "";
+      const mapLink = p.placeId ? `<a class="place-link" target="_blank" rel="noopener" href="https://www.google.com/maps/place/?q=place_id:${p.placeId}">${L.maps}</a>` : "";
       return`<div class="card place-card">
         <div>
           <p class="place-name">${p.name}</p>
-          <div class="place-meta"><span class="place-rating">★ ${p.rating}</span>${badge}</div>
+          <div class="place-meta">${ratingTxt}${badge}</div>
           <p class="place-note">${p.note[state.lang]}</p>
         </div>
-        <a class="place-link" target="_blank" rel="noopener" href="https://www.google.com/maps/place/?q=place_id:${p.placeId}">${L.maps}</a>
+        ${mapLink}
       </div>`;
-    }).join("");
+    }).join("") : `<div class="card empty-card">${state.lang==="fr"?"Rien d'ajouté ici pour le moment":"Nothing added here yet"}</div>`;
     return`<p class="cat-title">${L.catLabels[cat]}</p>${items}`;
   }).join("");
-
-  return`<div class="filters">${chips}</div>${cards}`;
+  return`<div class="filters">${chips}</div>${bonsplansBlock}${cards}`;
 }
 function setFilter(key){state.activeFilter=key;render();}
 
-/* ============================================================
-   AVIS
-   ============================================================ */
-let avisDraft={rating:0,name:"",comment:""};
+function renderAllergenes(){
+  const L=t().allergenes;
+  if(!window._allergyChecked) window._allergyChecked={};
+  if(!window._allergyCustom) window._allergyCustom="";
+  const rows=L.list.map((a,i)=>{
+    const checked=window._allergyChecked[i]||false;
+    return`<label class="allergy-row ${checked?"allergy-checked":""}">
+      <div class="allergy-info">
+        <span class="allergy-name">${a.icon} ${a.name}</span>
+        <span class="muted allergy-note">${a.note}</span>
+      </div>
+      <input type="checkbox" class="allergy-cb" data-idx="${i}" ${checked?"checked":""} onchange="toggleAllergy(${i},this.checked)">
+    </label>`;
+  }).join("");
+  const notes=L.notes.map(n=>`<li><span class="dot">✓</span>${n}</li>`).join("");
+  return`<p class="section-title">${L.title}</p>
+  <p class="muted" style="margin-top:-8px;margin-bottom:14px;">${L.intro}</p>
+  <div class="card">${rows}
+    <div class="allergy-custom-row">
+      <span class="allergy-name">➕ ${L.customLabel}</span>
+      <input type="text" class="allergy-custom-input" placeholder="${L.customPlaceholder}" value="${window._allergyCustom}" oninput="window._allergyCustom=this.value">
+    </div>
+  </div>
+  <div class="card">
+    <p class="section-title" style="font-size:17px;margin-bottom:8px;">${L.noteTitle}</p>
+    <ul class="clean">${notes}</ul>
+  </div>
+  <p class="help-line">📞 ${L.contact} : <a href="tel:${CONTACT_PHONE.replace(/\s/g,'')}" style="font-weight:700;">${CONTACT_PHONE}</a></p>`;
+}
+function toggleAllergy(idx,val){
+  if(!window._allergyChecked) window._allergyChecked={};
+  window._allergyChecked[idx]=val;
+  render();
+}
 
+function renderChambre(){
+  const L=t().chambre;
+  const pmrLi=L.pmrEquip.map(x=>`<li><span class="dot">—</span>${x}</li>`).join("");
+  const babyLi=L.babyEquip.map(x=>`<li><span class="dot">—</span>${x}</li>`).join("");
+  return`<p class="section-title">${L.title}</p>
+  <div class="card">
+    <p class="section-title" style="font-size:19px;margin-bottom:4px;">${L.pmrTitle}</p>
+    <p class="muted" style="margin-bottom:12px;">${L.pmrDesc}</p>
+    <ul class="clean">${pmrLi}</ul>
+    <p style="font-size:13px;margin-top:12px;padding:10px;background:var(--sand);border-radius:8px;font-family:'Inter',sans-serif;">${L.pmrNote}</p>
+  </div>
+  <div class="card">
+    <p class="section-title" style="font-size:19px;margin-bottom:4px;">${L.babyTitle}</p>
+    <p class="muted" style="margin-bottom:12px;">${L.babyDesc}</p>
+    <ul class="clean">${babyLi}</ul>
+    <p style="font-size:13px;margin-top:12px;padding:10px;background:var(--sand);border-radius:8px;font-family:'Inter',sans-serif;">${L.babyNote}</p>
+  </div>
+  <p class="help-line">📞 <a href="tel:${CONTACT_PHONE.replace(/\s/g,'')}" style="font-weight:700;">${CONTACT_PHONE}</a></p>`;
+}
+
+let avisDraft={rating:0,name:"",comment:""};
 async function loadReviews(id){
   try{const r=await window.storage.get("avis-bungalow-"+id,true);return r?JSON.parse(r.value):[];}
   catch(e){return[];}
@@ -553,7 +701,6 @@ async function saveReview(id,review){
   try{await window.storage.set("avis-bungalow-"+id,JSON.stringify(list),true);}
   catch(e){console.error(e);}
 }
-
 function renderAvis(){
   const L=t().avis;
   const stars=[1,2,3,4,5].map(n=>`<span class="star ${n<=avisDraft.rating?"filled":""}" onclick="setRating(${n})">★</span>`).join("");
@@ -595,72 +742,8 @@ async function renderReviewsBlock(){
 }
 function escapeHtml(s){const d=document.createElement("div");d.textContent=s;return d.innerHTML;}
 
-/* ============================================================
-   ALLERGENES
-   ============================================================ */
-function renderAllergenes(){
-  const L=t().allergenes;
-  if(!window._allergyChecked) window._allergyChecked={};
-  if(!window._allergyCustom) window._allergyCustom="";
-  const rows=L.list.map((a,i)=>{
-    const checked=window._allergyChecked[i]||false;
-    return`<label class="allergy-row ${checked?"allergy-checked":""}">
-      <div class="allergy-info">
-        <span class="allergy-name">${a.icon} ${a.name}</span>
-        <span class="muted allergy-note">${a.note}</span>
-      </div>
-      <input type="checkbox" class="allergy-cb" data-idx="${i}" ${checked?"checked":""} onchange="toggleAllergy(${i},this.checked)">
-    </label>`;
-  }).join("");
-  const notes=L.notes.map(n=>`<li><span class="dot">✓</span>${n}</li>`).join("");
-  return`<p class="section-title">${L.title}</p>
-  <p class="muted" style="margin-top:-8px;margin-bottom:14px;">${L.intro}</p>
-  <div class="card">${rows}
-    <div class="allergy-custom-row">
-      <span class="allergy-name">➕ ${L.customLabel}</span>
-      <input type="text" class="allergy-custom-input" placeholder="${L.customPlaceholder}" value="${window._allergyCustom}" oninput="window._allergyCustom=this.value">
-    </div>
-  </div>
-  <div class="card">
-    <p class="section-title" style="font-size:17px;margin-bottom:8px;">${L.noteTitle}</p>
-    <ul class="clean">${notes}</ul>
-  </div>
-  <p class="help-line">📞 ${L.contact} : <a href="tel:${CONTACT_PHONE.replace(/\s/g,'')}" style="font-weight:700;">${CONTACT_PHONE}</a></p>`;
-}
-function toggleAllergy(idx,val){
-  if(!window._allergyChecked) window._allergyChecked={};
-  window._allergyChecked[idx]=val;
-  render();
-}
-
-/* ============================================================
-   CHAMBRE SPÉCIFIQUE
-   ============================================================ */
-function renderChambre(){
-  const L=t().chambre;
-  const pmrLi=L.pmrEquip.map(x=>`<li><span class="dot">—</span>${x}</li>`).join("");
-  const babyLi=L.babyEquip.map(x=>`<li><span class="dot">—</span>${x}</li>`).join("");
-  return`<p class="section-title">${L.title}</p>
-  <div class="card">
-    <p class="section-title" style="font-size:19px;margin-bottom:4px;">${L.pmrTitle}</p>
-    <p class="muted" style="margin-bottom:12px;">${L.pmrDesc}</p>
-    <ul class="clean">${pmrLi}</ul>
-    <p style="font-size:13px;margin-top:12px;padding:10px;background:var(--sand);border-radius:8px;font-family:'Inter',sans-serif;">${L.pmrNote}</p>
-  </div>
-  <div class="card">
-    <p class="section-title" style="font-size:19px;margin-bottom:4px;">${L.babyTitle}</p>
-    <p class="muted" style="margin-bottom:12px;">${L.babyDesc}</p>
-    <ul class="clean">${babyLi}</ul>
-    <p style="font-size:13px;margin-top:12px;padding:10px;background:var(--sand);border-radius:8px;font-family:'Inter',sans-serif;">${L.babyNote}</p>
-  </div>
-  <p class="help-line">📞 <a href="tel:${CONTACT_PHONE.replace(/\s/g,'')}" style="font-weight:700;">${CONTACT_PHONE}</a></p>`;
-}
-
-/* ============================================================
-   RENDER
-   ============================================================ */
 function render(){
-  const map={wifi:renderWifi,logement:renderLogement,alentours:renderAlentours,allergenes:renderAllergenes,chambre:renderChambre,avis:renderAvis};
+  const map={wifi:renderWifi,logement:renderLogement,reglement:renderReglement,alentours:renderAlentours,allergenes:renderAllergenes,chambre:renderChambre,avis:renderAvis};
   document.getElementById("tabContent").innerHTML=map[state.tab]();
   if(state.tab==="avis")renderReviewsBlock();
 }
